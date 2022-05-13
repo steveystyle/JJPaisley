@@ -4,12 +4,18 @@ const app = express();
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
 const handlebars = require('express-handlebars')
     .create({ defaultLayout: 'main' });
-    
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
+
+app.use(function(req, res, next){
+    res.locals.showTests = app.get('env') !== 'production' &&
+    req.query.test === '1';
+    next();
+   });
 
 app.get('/', function (req, res) {
     res.render('home');
