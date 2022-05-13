@@ -3,8 +3,14 @@
 
  Site uses an MVC architechture and is tested using CI/CD with Jenkins, Mocha and Chai.
 
+ auto git test
+ 
+
 
 
 
  
+
+
+
 

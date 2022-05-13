@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/steveystyle/JJPaisley/issues"
   },
-  "homepage": "https://github.com/steveystyle/JJPaisley#readme"
+  "homepage": "https://github.com/steveystyle/JJPaisley#readme",
+  "dependencies": {
+    "express": "4.18.1"
+  }
 }
