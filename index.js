@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express();
+var dayQuote = require('./lib/dayQuotes')
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
 const handlebars = require('express-handlebars')
@@ -18,7 +19,9 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function (req, res) {
-    res.render('home');
+    res.render('home',
+    {dayQuote: dayQuote.getDayQuote()}
+    );
 });
 
 app.get('/about', function (req, res) {
