@@ -10,6 +10,8 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', process.env.PORT || 3000);
 
+app.disable('x-powered-by');
+
 app.use(express.static(__dirname + '/public'));
 
 app.use(function (req, res, next) {
@@ -17,7 +19,7 @@ app.use(function (req, res, next) {
         req.query.test === '1';
     next();
 });
-
+   
 app.get('/', function (req, res) {
     res.render('home',
     {dayQuote: dayQuote.getDayQuote()}
