@@ -14,7 +14,7 @@ suite('Day Quote tests', function () {
 
     test('getDayQuote() should return a quote based on current day of the week', function () {
         expect(typeof dayQuote.getDayQuote() === 'string');
-        expect((dayQuotesExpected).to.contain(dayQuote.getDayQuote()));
+        expect(dayQuotesExpected).to.contain(dayQuote.getDayQuote());
     });
 
 });
