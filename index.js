@@ -1,6 +1,6 @@
-const express = require('express')
+const express = require('express');
 const app = express();
-var dayQuote = require('./lib/dayQuotes')
+var dayQuote = require('./lib/dayQuotes');
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
 const handlebars = require('express-handlebars')
