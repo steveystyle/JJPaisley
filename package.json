@@ -1,0 +1,19 @@
+{
+  "name": "jjpaisley",
+  "version": "1.0.0",
+  "description": "Dependancy package for JJPaisley Web App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steveystyle/JJPaisley.git"
+  },
+  "author": "Steven Crawford",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/steveystyle/JJPaisley/issues"
+  },
+  "homepage": "https://github.com/steveystyle/JJPaisley#readme"
+}
