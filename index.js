@@ -1,6 +1,13 @@
 const express = require('express')
-
 const app = express();
+
+//handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
+const handlebars = require('express-handlebars')
+.create({defaultLayout:'main'});
+
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
+
 
 app.set('port', process.env.PORT || 3000);
 
