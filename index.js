@@ -72,6 +72,19 @@ app.get('/jtest', function (req, res) {
     res.render('jquery-test', {});
 });
 
+app.get('/nursery-rhyme', function (req, res) {
+    res.render('nursery-rhyme');
+});
+
+app.get('/data/nursery-rhyme', function (req, res) {
+    res.json({
+        animal: 'squirrel',
+        bodyPart: 'tail',
+        adjective: 'bushy',
+        noun: 'heck',
+    });
+});
+
 //custom 404 - update to view later
 app.use(function (req, res) {
     res.status(404);
