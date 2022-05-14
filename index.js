@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-const handlers = require('./lib/handlers')
+const handlers = require('./lib/handlers');
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
 const expressHandlebars = require('express-handlebars');
@@ -27,7 +27,11 @@ app.get('/about', handlers.about);
 app.use(handlers.notFound);
 app.use(handlers.serverError);
 
-app.listen(port, () =>
-    console.log('Server started on http://localhost:%s; press Ctrl-C to terminate.', port)
-);
+if (require.main === module) {
+    app.listen(port, () =>
+        console.log('Server started on http://localhost:%s; press Ctrl-C to terminate.', port)
+    );
+} else {
+    module.exports = app;
+}
 
