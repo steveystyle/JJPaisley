@@ -18,11 +18,16 @@ afterEach(() => {
 test('home page links to about page', async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  await page.setRequestInterception(true);
+  page.on('request', (request) =>{
+    request.url().endsWith('.png').abort();
+  });
+    
+  
   await page.goto(`http://localhost:${port}`);
 
-  page.waitForNavigation();
-  const elems = await page.$('a');
-  console.log(elems);
+
+
 
  // expect(page.url()).toBe(`http://localhost:${port}/about`);
   await browser.close();
