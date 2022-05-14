@@ -108,14 +108,12 @@ app.post('/contest/vacation-photo/:year/:month', function (req, res) {
 app.get('/', (req, res) => {
     res.render('home',
         { dayQuote: dayQuote.getDayQuote() }
-    )
+    );
 });
 
 
 app.get('/about', (req, res) => {
-    res.render('about',
-        { pageTestScript: '/tests/tests-about.js' }
-    )
+    res.render('about');
 });
 
 

@@ -4,7 +4,7 @@
   "description": "Dependancy package for JJPaisley Web App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "run": "nodemon index.js"
   },
   "repository": {
@@ -28,8 +28,7 @@
     "jquery-file-upload-middleware": "0.1.8"
   },
   "devDependencies": {
-    "chai": "4.3.6",
-    "mocha": "10.0.0",
+    "jest": "28.1.0",
     "nodemon": "2.0.16"
   }
 }
