@@ -3,7 +3,16 @@ const app = express();
 var dayQuote = require('./lib/dayQuotes');
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
-const handlebars = require('express-handlebars').create({ defaultLayout: 'main' });
+const handlebars = require('express-handlebars').create({
+    defaultLayout: 'main',
+    helpers: {
+        section: function (name, options) {
+            if (!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
+        }
+    }
+});
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -59,6 +68,9 @@ app.get('/about', function (req, res) {
     });
 });
 
+app.get('/jtest', function (req, res) {
+    res.render('jquery-test', {});
+});
 
 //custom 404 - update to view later
 app.use(function (req, res) {
