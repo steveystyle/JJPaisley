@@ -1,6 +1,16 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const expressHandlebars = require('express-handlebars');
+
 const app = express();
+
+app.engine('handlebars', expressHandlebars({
+    defaultLayout: 'main',
+}));
+
+app.set('view engine', 'handlebars');
+
+const bodyParser = require('body-parser');
+
 const formidable = require('formidable');
 const jqupload = require('jquery-file-upload-middleware');
 const credentials = require('./credentials.js');
@@ -9,20 +19,7 @@ const port = process.env.PORT || 3000;
 var dayQuote = require('./lib/dayQuotes');
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
-const handlebars = require('express-handlebars');
 
-app.engine('handlebars', handlebars({
-    defaultLayout: 'main',
-    helpers: {
-        section: function (name, options) {
-            if (!this._sections) this._sections = {};
-            this._sections[name] = options.fn(this);
-            return null;
-        }
-    }
-}));
-
-app.set('view engine', 'handlebars');
 
 app.disable('x-powered-by');
 
@@ -109,17 +106,17 @@ app.post('/contest/vacation-photo/:year/:month', function (req, res) {
     });
 });
 
-app.get('/', function (req, res) {
-    res.render('home',
-        { dayQuote: dayQuote.getDayQuote() }
-    );
-});
+app.get('/', (req, res) => res.render(
+    'home',
+    { dayQuote: dayQuote.getDayQuote() }
+));
 
-app.get('/about', function (req, res) {
-    res.render('about', {
-        pageTestScript: '/tests/tests-about.js'
-    });
-});
+
+app.get('/about', (req, res) => res.render(
+    'about',
+    { pageTestScript: '/tests/tests-about.js' }
+));
+
 
 app.get('/jtest', function (req, res) {
     res.render('jquery-test', {});
@@ -138,15 +135,19 @@ app.get('/data/nursery-rhyme', function (req, res) {
     });
 });
 
-app.use(function (req, res) {
+app.use((req, res) => {
     res.status(404);
-    res.render('404', { layout: null });
+    res.render(
+        '404',
+        { layout: null });
 });
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500);
-    res.render('500', { layout: null });
+    res.render(
+        '500',
+        { layout: null });
 });
 
 app.listen(port, () =>
