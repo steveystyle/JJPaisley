@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const handlers = require('./lib/handlers');
+const weatherMiddlware = require('./lib/middleware/weather');
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
 const expressHandlebars = require('express-handlebars');
@@ -21,9 +22,10 @@ app.disable('x-powered-by');
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(weatherMiddlware);
+
 app.get('/', handlers.home);
 app.get('/about', handlers.about);
-
 
 app.use(handlers.notFound);
 app.use(handlers.serverError);
@@ -35,4 +37,3 @@ if (require.main === module) {
 } else {
     module.exports = app;
 }
-
