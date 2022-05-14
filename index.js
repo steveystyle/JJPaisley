@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const handlers = require('./lib/handlers');
 const weatherMiddlware = require('./lib/middleware/weather');
-
+const bodyParser = require('body-parser');
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
 const expressHandlebars = require('express-handlebars');
 app.engine('handlebars', expressHandlebars.engine({
@@ -17,6 +17,8 @@ app.engine('handlebars', expressHandlebars.engine({
     }
 }));
 app.set('view engine', 'handlebars');
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.disable('x-powered-by');
 
