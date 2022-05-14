@@ -5,11 +5,13 @@ const formidable = require('formidable');
 const jqupload = require('jquery-file-upload-middleware');
 const credentials = require('./credentials.js');
 const path = require('path');
+const port = process.env.PORT || 3000;
 var dayQuote = require('./lib/dayQuotes');
 
-
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
-const handlebars = require('express-handlebars').create({
+const handlebars = require('express-handlebars');
+
+app.engine('handlebars', handlebars({
     defaultLayout: 'main',
     helpers: {
         section: function (name, options) {
@@ -18,11 +20,9 @@ const handlebars = require('express-handlebars').create({
             return null;
         }
     }
-});
+}));
 
-app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', process.env.PORT || 3000);
 
 app.disable('x-powered-by');
 
@@ -149,7 +149,7 @@ app.use(function (err, req, res, next) {
     res.render('500', { layout: null });
 });
 
-app.listen(app.get('port'), function () {
-    console.log('Server started on http://localhost:%s; press Ctrl-C to terminate.', app.get('port'));
-});
+app.listen(port, () =>
+    console.log('Server started on http://localhost:%s; press Ctrl-C to terminate.', port)
+);
 
