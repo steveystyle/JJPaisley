@@ -1,11 +1,15 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 
 const handlers = require('./lib/handlers');
 const weatherMiddlware = require('./lib/middleware/weather');
 
 const app = express();
+
+app.use(cors());
 
 app.engine('handlebars', expressHandlebars.engine({
     defaultLayout: 'main',
