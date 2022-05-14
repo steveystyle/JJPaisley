@@ -19,7 +19,6 @@ app.engine('handlebars', expressHandlebars.engine({
 app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 app.disable('x-powered-by');
 
