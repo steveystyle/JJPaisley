@@ -4,6 +4,7 @@ const app = express();
 const formidable = require('formidable');
 const jqupload = require('jquery-file-upload-middleware');
 const credentials = require('./credentials.js');
+const path = require('path');
 var dayQuote = require('./lib/dayQuotes');
 
 
@@ -26,8 +27,11 @@ app.set('port', process.env.PORT || 3000);
 app.disable('x-powered-by');
 
 app.use(express.static(__dirname + '/public'));
+app.use(require('express-session')());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require('cookie-parser')(credentials.cookieSecret));
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 
 function getWeatherData() {
     return {
