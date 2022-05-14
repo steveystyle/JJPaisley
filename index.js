@@ -2,8 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const formidable = require('formidable');
-
+const jqupload = require('jquery-file-upload-middleware');
+const credentials = require('./credentials.js');
 var dayQuote = require('./lib/dayQuotes');
+
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
 const handlebars = require('express-handlebars').create({
@@ -25,6 +27,7 @@ app.disable('x-powered-by');
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(require('cookie-parser')(credentials.cookieSecret));
 
 function getWeatherData() {
     return {
@@ -53,6 +56,17 @@ function getWeatherData() {
         ],
     };
 }
+app.use('/upload', function (req, res, next) {
+    var now = Date.now();
+    jqupload.fileHandler({
+        uploadDir: function () {
+            return __dirname + '/public/uploads/' + now;
+        },
+        uploadUrl: function () {
+            return '/uploads/' + now;
+        },
+    })(req, res, next);
+});
 
 app.use(function (req, res, next) {
     if (!res.locals.partials) res.locals.partials = {};
