@@ -76,7 +76,7 @@ app.post('/process', function (req, res) {
 app.get('/contest/vacation-photo', function (req, res) {
     var now = new Date();
     res.render('contest/vacation-photo', {
-        year: now.getFullYear(), month: now.getMont()
+        year: now.getFullYear(), month: now.getMonth()
     });
 });
 app.post('/contest/vacation-photo/:year/:month', function (req, res) {
