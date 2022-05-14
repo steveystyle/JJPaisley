@@ -1,16 +1,6 @@
 const express = require('express');
-const expressHandlebars = require('express-handlebars');
-
 const app = express();
-
-app.engine('handlebars', expressHandlebars({
-    defaultLayout: 'main',
-}));
-
-app.set('view engine', 'handlebars');
-
 const bodyParser = require('body-parser');
-
 const formidable = require('formidable');
 const jqupload = require('jquery-file-upload-middleware');
 const credentials = require('./credentials.js');
@@ -19,15 +9,24 @@ const port = process.env.PORT || 3000;
 var dayQuote = require('./lib/dayQuotes');
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
-
+const expressHandlebars = require('express-handlebars');
+app.engine('handlebars', expressHandlebars.engine({
+    defaultLayout: 'main',
+    helpers: {
+        section: function (name, options) {
+            if (!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
+        }
+    }
+}));
+app.set('view engine', 'handlebars');
 
 app.disable('x-powered-by');
 
 app.use(express.static(__dirname + '/public'));
-app.use(require('express-session')());
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(require('cookie-parser')(credentials.cookieSecret));
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 
 function getWeatherData() {
@@ -106,16 +105,18 @@ app.post('/contest/vacation-photo/:year/:month', function (req, res) {
     });
 });
 
-app.get('/', (req, res) => res.render(
-    'home',
-    { dayQuote: dayQuote.getDayQuote() }
-));
+app.get('/', (req, res) => {
+    res.render('home',
+        { dayQuote: dayQuote.getDayQuote() }
+    )
+});
 
 
-app.get('/about', (req, res) => res.render(
-    'about',
-    { pageTestScript: '/tests/tests-about.js' }
-));
+app.get('/about', (req, res) => {
+    res.render('about',
+        { pageTestScript: '/tests/tests-about.js' }
+    )
+});
 
 
 app.get('/jtest', function (req, res) {
@@ -139,7 +140,8 @@ app.use((req, res) => {
     res.status(404);
     res.render(
         '404',
-        { layout: null });
+        { layout: null }
+    );
 });
 
 app.use((err, req, res, next) => {
@@ -147,7 +149,8 @@ app.use((err, req, res, next) => {
     res.status(500);
     res.render(
         '500',
-        { layout: null });
+        { layout: null }
+    );
 });
 
 app.listen(port, () =>
