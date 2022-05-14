@@ -5,6 +5,14 @@ var dayQuote = require('./lib/dayQuotes');
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
 const handlebars = require('express-handlebars').create({ defaultLayout: 'main' });
 
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
+app.set('port', process.env.PORT || 3000);
+
+app.disable('x-powered-by');
+
+app.use(express.static(__dirname + '/public'));
+
 function getWeatherData() {
     return {
         locations: [
@@ -33,19 +41,9 @@ function getWeatherData() {
     };
 }
 
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
-app.set('port', process.env.PORT || 3000);
-
-app.disable('x-powered-by');
-
-app.use(express.static(__dirname + '/public'));
-
-
-
 app.use(function (req, res, next) {
     if (!res.locals.partials) res.locals.partials = {};
-    res.locals.partials.weather = getWeatherData();
+    res.locals.partials.weatherData = getWeatherData();
     next();
 });
 
