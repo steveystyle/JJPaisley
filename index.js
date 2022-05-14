@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
-
 const app = express();
+const formidable = require('formidable');
 
 var dayQuote = require('./lib/dayQuotes');
 
@@ -25,7 +24,7 @@ app.set('port', process.env.PORT || 3000);
 app.disable('x-powered-by');
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser);
+app.use(bodyParser.urlencoded({ extended: false }));
 
 function getWeatherData() {
     return {
@@ -61,6 +60,37 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.get('/newsletter', function (req, res) {
+    res.render('newsletter', { csrf: 'CSRF token goes here' });
+});
+app.post('/process', function (req, res) {
+    if (req.xhr || req.accepts('json,html') === 'json') {
+        // if there were an error, we would send { error: 'error description' }
+        res.send({ success: true });
+    } else {
+        // if there were an error, we would redirect to an error page
+        res.redirect(303, '/thank-you');
+    }
+});
+
+app.get('/contest/vacation-photo', function (req, res) {
+    var now = new Date();
+    res.render('contest/vacation-photo', {
+        year: now.getFullYear(), month: now.getMont()
+    });
+});
+app.post('/contest/vacation-photo/:year/:month', function (req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+        if (err) return res.redirect(303, '/error');
+        console.log('received fields:');
+        console.log(fields);
+        console.log('received files:');
+        console.log(files);
+        res.redirect(303, '/thank-you');
+    });
+});
+
 app.get('/', function (req, res) {
     res.render('home',
         { dayQuote: dayQuote.getDayQuote() }
@@ -90,13 +120,11 @@ app.get('/data/nursery-rhyme', function (req, res) {
     });
 });
 
-//custom 404 - update to view later
 app.use(function (req, res) {
     res.status(404);
     res.render('404', { layout: null });
 });
 
-// custom 500 - update to view later
 app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500);
