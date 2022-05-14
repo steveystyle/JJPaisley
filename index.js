@@ -1,5 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
+
 const app = express();
+
 var dayQuote = require('./lib/dayQuotes');
 
 //handlebars view engine selected to use default layouts and apply logic to views for efficiency of menu display
@@ -21,6 +25,7 @@ app.set('port', process.env.PORT || 3000);
 app.disable('x-powered-by');
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser);
 
 function getWeatherData() {
     return {
