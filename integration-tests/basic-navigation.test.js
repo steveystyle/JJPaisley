@@ -19,9 +19,9 @@ test('home page links to about page', async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(`http://localhost:${port}`);
-  await Promise.all([
+  const [response] = await Promise.all([
     page.waitForNavigation(),
-    page.$('[testid="about"]').click,
+    page.click('a.test2'),
   ]);
   expect(page.url()).toBe(`http://localhost:${port}/about`);
   await browser.close();
