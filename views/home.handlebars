@@ -1,10 +1,19 @@
-<h1>Welcome to Jam Jar</h1>
 <h2>Home</h2>
-{{> weather}}
 {{#if dayQuote}}
 <p>Day Quote: </p>
 <blockquote>{{dayQuote}}</blockquote>
 {{/if}}
+<p>Wecome to Jam Jar! Please sign up to our newsletter using either:</p>
+<ul>
+  <li><a href="/newsletter-signup">Old-school form submission</a>.</li>
+  <li><a href="/newsletter">Async form submission (recommended)</a>.</li>
+</ul>
+<p>Also, please enter our Vacation Photo Contest using either:</p>
+<ul>
+  <li><a href="/contest/vacation-photo">Old-school form submission</a>.</li>
+  <li><a href="/contest/vacation-photo-ajax">Async form submission (recommended)</a>.</li>
+</ul>
+{{> weather}}
 <p class="test1">Questions? Checkout out our
   <a href="/about" class="test2" testid="about">About Us</a> page!
 </p>
