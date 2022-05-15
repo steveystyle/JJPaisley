@@ -19,8 +19,18 @@ test('home page links to about page', async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(`http://localhost:${port}`);
-  await page.waitForSelector('a.test2', {visible: true});
-  const [response] = await Promise.all([
+  await page.setViewport({
+    width: 1200,
+    height: 800
+  });
+  await page.$eval(
+    'a.test2',
+    e => {
+      e.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
+    }
+  );
+  await page.waitForSelector('a.test2', { visible: true });
+  await Promise.all([
     page.waitForNavigation(),
     page.click('a.test2'),
   ]);

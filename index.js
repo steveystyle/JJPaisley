@@ -8,6 +8,7 @@ const weatherMiddlware = require('./lib/middleware/weather');
 
 const app = express();
 
+const multiparty = require('multiparty');
 
 app.engine('handlebars', expressHandlebars.engine({
     defaultLayout: 'main',
@@ -41,6 +42,14 @@ app.get('/newsletter-signup/thank-you', handlers.newsletterSignupThankYou);
 
 app.get('/newsletter', handlers.newsletter);
 app.post('/api/newsletter-signup', handlers.api.newsletterSignup);
+
+app.post('/contest/vacation-photo/:year/:month', (req, res) => {
+    const form = new multiparty.Form();
+    form.parse(req, (err, fields, files) => {
+        if (err) return res.status(500).send({ error: err.message });
+        handlers.vacationPhotoContestProcess(req, res, fields, files);
+    });
+});
 
 app.use(handlers.notFound);
 app.use(handlers.serverError);
