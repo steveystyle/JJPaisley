@@ -21,7 +21,7 @@ test('home page links to about page', async () => {
   await page.goto(`http://localhost:${port}`);
   await page.setViewport({
     width: 1200,
-    height: 800
+    height: 1500
   });
   await page.$eval(
     'a.test2',
