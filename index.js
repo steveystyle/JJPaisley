@@ -10,6 +10,7 @@ const app = express();
 
 const handlers = require('./lib/handlers');
 const weatherMiddlware = require('./lib/middleware/weather');
+const flashMiddleware = require('./lib/middleware/flash');
 
 app.engine('handlebars', expressHandlebars.engine({
     defaultLayout: 'main',
@@ -35,6 +36,7 @@ app.use(expressSession({
 app.use(express.static(__dirname + '/public'));
 
 app.use(weatherMiddlware);
+app.use(flashMiddleware);
 
 app.disable('x-powered-by');
 
