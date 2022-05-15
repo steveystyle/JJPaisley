@@ -6,11 +6,12 @@ const expressSession = require('express-session');
 const multiparty = require('multiparty');
 const port = process.env.PORT || 3000;
 const { credentials } = require('./config');
-const app = express();
 
 const handlers = require('./lib/handlers');
 const weatherMiddlware = require('./lib/middleware/weather');
 const flashMiddleware = require('./lib/middleware/flash');
+
+const app = express();
 
 app.engine('handlebars', expressHandlebars.engine({
     defaultLayout: 'main',
@@ -26,6 +27,7 @@ app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 app.use(cookieParser(credentials.cookieSecret));
 app.use(expressSession({
     resave: false,
@@ -46,6 +48,7 @@ app.get('/about', handlers.about);
 app.get('/newsletter-signup', handlers.newsletter.Signup);
 app.post('/newsletter-signup/process', handlers.newsletter.Process);
 app.get('/newsletter-signup/thank-you', handlers.newsletter.ThankYou);
+app.get('/newsletter-archive', handlers.newsletter.Archive);
 
 app.get('/contest/vacation-photo', handlers.vacationPhoto.Contest);
 app.post('/contest/vacation-photo/:year/:month', (req, res) => {
