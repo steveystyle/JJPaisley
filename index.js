@@ -43,26 +43,26 @@ app.disable('x-powered-by');
 app.get('/', handlers.home);
 app.get('/about', handlers.about);
 
-app.get('/newsletter-signup', handlers.newsletterSignup.Home);
-app.post('/newsletter-signup/process', handlers.newsletterSignup.Process);
-app.get('/newsletter-signup/thank-you', handlers.newsletterSignup.ThankYou);
+app.get('/newsletter-signup', handlers.newsletter.Signup);
+app.post('/newsletter-signup/process', handlers.newsletter.Process);
+app.get('/newsletter-signup/thank-you', handlers.newsletter.ThankYou);
 
-app.get('/newsletter', handlers.newsletter);
-app.post('/api/newsletter-signup', handlers.api.newsletterSignup);
-
-app.get('/contest/vacation-photo', handlers.vacationPhotoContest.Home);
+app.get('/contest/vacation-photo', handlers.vacationPhoto.Contest);
 app.post('/contest/vacation-photo/:year/:month', (req, res) => {
     const form = new multiparty.Form();
     form.parse(req, (err, fields, files) => {
-        if (err) return handlers.vacationPhotoContest.ProcessError(req, res, err.message);
+        if (err) return handlers.vacationPhoto.ProcessError(req, res, err.message);
         console.log('got fields: ', fields);
         console.log('and files: ', files);
-        handlers.vacationPhotoContest.Process(req, res, fields, files);
+        handlers.vacationPhoto.Process(req, res, fields, files);
     });
 });
-app.get('/contest/vacation-photo-thank-you', handlers.vacationPhotoContest.ProcessThankYou);
+app.get('/contest/vacation-photo-thank-you', handlers.vacationPhoto.ProcessThankYou);
 
-app.get('/contest/vacation-photo-ajax', handlers.vacationPhotoContestAjax);
+app.get('/newsletter', handlers.ajax.newsletter);
+app.post('/api/newsletter-signup', handlers.api.newsletterSignup);
+
+app.get('/contest/vacation-photo-ajax', handlers.ajax.vacationPhotoContest);
 app.post('/api/vacation-photo-contest/:year/:month', (req, res) => {
     const form = new multiparty.Form();
     form.parse(req, (err, fields, files) => {
