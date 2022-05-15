@@ -1,14 +1,13 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
-
+const cookieParser = require('cookie-parser');
+const multiparty = require('multiparty');
+const port = process.env.PORT || 3000;
+const app = express();
 
 const handlers = require('./lib/handlers');
 const weatherMiddlware = require('./lib/middleware/weather');
-
-const app = express();
-
-const multiparty = require('multiparty');
 
 app.engine('handlebars', expressHandlebars.engine({
     defaultLayout: 'main',
@@ -25,7 +24,7 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const port = process.env.PORT || 3000;
+
 
 app.use(express.static(__dirname + '/public'));
 
