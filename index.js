@@ -87,7 +87,7 @@ app.use(handlers.serverError);
 
 if (require.main === module) {
     app.listen(port, () => {
-        console.log('Server started on http://localhost:%s; press Ctrl-C to terminate.', port);
+        console.log('Server started in %s mode at http://localhost:%s; press Ctrl-C to terminate.', app.get('env'), port);
     });
 } else {
     module.exports = app;
