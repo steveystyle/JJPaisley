@@ -1,7 +1,7 @@
 const portfinder = require('portfinder');
 const puppeteer = require('puppeteer');
 
-const app = require('../index.js');
+const {app} = require('../index.js');
 
 let server = null;
 let port = null;

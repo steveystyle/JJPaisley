@@ -110,5 +110,5 @@ function startServer(port) {
 if (require.main === module) {
     startServer(port);
 } else {
-    module.exports = app;
+    module.exports = {app, startServer};
 }
