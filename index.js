@@ -4,12 +4,20 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const multiparty = require('multiparty');
+const nodemailer = require('nodemailer');
 const port = process.env.PORT || 3000;
 const { credentials } = require('./config');
 
 const handlers = require('./lib/handlers');
 const weatherMiddlware = require('./lib/middleware/weather');
 const flashMiddleware = require('./lib/middleware/flash');
+
+const mailTransport = nodemailer.createTransport({
+    auth: {
+        user: credentials.sendgrid.user,
+        pass: credentials.sendgrid.password,
+    }
+});
 
 const app = express();
 
