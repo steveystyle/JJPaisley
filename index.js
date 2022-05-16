@@ -41,8 +41,6 @@ const mailTransport = nodemailer.createTransport({
     }
 });
 
-
-
 app.engine('handlebars', expressHandlebars.engine({
     defaultLayout: 'main',
     helpers: {
