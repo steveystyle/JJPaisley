@@ -9,6 +9,25 @@ const port = process.env.PORT || 3000;
 const { credentials } = require('./config');
 const morgan = require('morgan');
 const fs = require('fs');
+const cluster = require('cluster');
+
+const app = express();
+switch (app.get('env')) {
+    case 'development':
+        app.use(morgan('dev'));
+        break;
+    case 'production':
+        const stream = fs.createWriteStream(__dirname + '/access.log',
+            { flags: 'a' });
+        app.use(morgan('combined', { stream }));
+        break;
+}
+
+app.use((req, res, next) => {
+  if(cluster.isWorker)
+    console.log(`Worker ${cluster.worker.id} received request`);
+  next();
+});
 
 const handlers = require('./lib/handlers');
 const weatherMiddlware = require('./lib/middleware/weather');
@@ -22,17 +41,7 @@ const mailTransport = nodemailer.createTransport({
     }
 });
 
-const app = express();
-switch (app.get('env')) {
-    case 'development':
-        app.use(morgan('dev'));
-        break;
-    case 'production':
-        const stream = fs.createWriteStream(__dirname + '/access.log',
-            { flags: 'a' });
-        app.use(morgan('combined', { stream }));
-        break;
-}
+
 
 app.engine('handlebars', expressHandlebars.engine({
     defaultLayout: 'main',
