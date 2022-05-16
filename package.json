@@ -4,8 +4,10 @@
   "description": "Dependancy package for JJPaisley Web App",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "run": "nodemon index.js"
+    "test": "set NODE_ENV=test&& jest",
+    "start": "nodemon index.js",
+    "run-dev": "set NODE_ENV=development && start",
+    "run-prod": "set NODE_ENV=production && start"
   },
   "repository": {
     "type": "git",
