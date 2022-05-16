@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const multiparty = require('multiparty');
 const nodemailer = require('nodemailer');
-
+const port = process.env.PORT || 3000;
 const { credentials } = require('./config');
 const morgan = require('morgan');
 const fs = require('fs');
@@ -102,13 +102,13 @@ function startServer(port) {
     app.listen(port, function () {
         console.log(
             'Server started in %s mode at http://localhost:%s; press Ctrl-C to terminate.',
-            app.get('env'), 
+            app.get('env'),
             port);
     });
 }
 
 if (require.main === module) {
-    startServer(process.env.PORT || 3000);
+    startServer(port);
 } else {
-    module.exports = startServer;
+    module.exports = app;
 }
