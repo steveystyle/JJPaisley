@@ -14,6 +14,7 @@ const handlers = require('./lib/handlers');
 const weatherMiddlware = require('./lib/middleware/weather');
 const flashMiddleware = require('./lib/middleware/flash');
 
+//to return an email confirmation of uploaded review
 const mailTransport = nodemailer.createTransport({
     auth: {
         user: credentials.sendgrid.user,

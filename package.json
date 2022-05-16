@@ -6,8 +6,8 @@
   "scripts": {
     "test": "set NODE_ENV=test&& jest",
     "start": "nodemon index.js",
-    "run-dev": "set NODE_ENV=development && start",
-    "run-prod": "set NODE_ENV=production && start"
+    "run-dev": "set NODE_ENV=development&& npm start",
+    "run-prod": "set NODE_ENV=production&& npm start"
   },
   "repository": {
     "type": "git",
