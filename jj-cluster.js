@@ -23,6 +23,5 @@ if (cluster.isMaster) {
     });
 } else {
     const port = process.env.PORT || 3000;
-    // start our app on worker; see meadowlark.js
-    require('./index.js')(port);
+    require('./index.js').startServer(port);
 }
