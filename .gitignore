@@ -131,6 +131,9 @@ dist
 
 
 #credentials file that stores secrets and keys
-credentials.js 
 .credentials.*
+
+
+#photo storage
+/data
 
